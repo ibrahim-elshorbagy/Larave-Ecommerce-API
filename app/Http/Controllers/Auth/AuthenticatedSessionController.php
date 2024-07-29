@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,11 +26,17 @@ class AuthenticatedSessionController extends Controller
             $user->tokens()->delete(); // Delete existing tokens if any
 
             // Create a new token
-            $token = $user->createToken('API TOKEN');
+            $token = $user->createToken('auth_token')->plainTextToken;
+            $roles = $user->roles->pluck('name');
 
             return response()->json([
-                'user' => $user,
-                'access_token' => $token->plainTextToken,
+                 'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'roles' => $roles,
+                 ],
+                'access_token' => $token,
                 'token_type' => 'Bearer',
             ]);
         try {
@@ -39,7 +46,8 @@ class AuthenticatedSessionController extends Controller
                 'message' => 'Invalid credentials.',
             ], 401);
 
-        } catch (\Throwable $th) {
+        }
+        catch (\Throwable $th) {
             // Handle other unexpected errors
             return response()->json([
                 'status' => false,

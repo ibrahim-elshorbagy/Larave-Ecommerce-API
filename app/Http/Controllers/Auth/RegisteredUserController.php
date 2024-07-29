@@ -43,17 +43,23 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
         ]);
-
+        $user->assignRole('user');
         event(new Registered($user));
 
         Auth::login($user);
         $token = $user->createToken('auth_token')->plainTextToken;
+        $roles = $user->roles->pluck('name');
 
         return response()->json([
                 'status' => true,
                 'message' => 'User registered successfully',
                 'token' => $token,
-                'user' => $user
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'roles' => $roles,
+                ]
             ], 201);
     }
 

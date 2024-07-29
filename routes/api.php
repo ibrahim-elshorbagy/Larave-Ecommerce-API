@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Product\ProductController;
 
 // Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //     return $request->user();
@@ -30,7 +31,7 @@ Route::post('/reset-password', [NewPasswordController::class, 'store']);
 });
 //----------------------------------------------------------------------------------//
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum','role:user'])->group(function () {
 
 //----------------------------------------------------------------------------------//
 
@@ -46,4 +47,11 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
 
 
+});
+
+//----------------------------------------------------------------------------------//
+
+Route::middleware(['auth:sanctum' ,'role:admin'])->prefix('')->group(function () {
+
+    Route::apiResource('dashboard/products',ProductController::class);
 });

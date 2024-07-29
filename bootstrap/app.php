@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'role' => RoleMiddleware::class,
+
         ]);
 
         //
