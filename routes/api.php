@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\ProductIndexingController;
 
 // Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //     return $request->user();
@@ -20,6 +21,8 @@ use App\Http\Controllers\Product\ProductController;
 // Auth System
 Route::middleware(['guest','api'])->group(function () {
 
+//------------------------------ Login system -----------------------------------------//
+
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
@@ -27,6 +30,11 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('l
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
 
 Route::post('/reset-password', [NewPasswordController::class, 'store']);
+
+//------------------------------ Products -----------------------------------------//
+
+    Route::get('products',[ProductIndexingController::class,'index']);
+    Route::get('products/{product:slug}',[ProductIndexingController::class,'show']);
 
 });
 //----------------------------------------------------------------------------------//
@@ -42,7 +50,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
 // Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
 //                 ->middleware(['throttle:6,1']);
-//----------------------------------------------------------------------------------//
+
 
 
 

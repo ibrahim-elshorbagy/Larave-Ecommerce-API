@@ -21,9 +21,26 @@ you must create it's frontend page and take the token from url and send  with re
 |------------|--------------------------------------|----------------------------------------------------|
 | GET        | `/api/dashboard/products`            | Retrieve paginated list of products                |
 | POST       | `/api/dashboard/products`            | Create a new product                               |
-| GET        | `/api/dashboard/products/{id}`       | Retrieve details of a specific product             |
-| PUT        | `/api/dashboard/products/{id}`       | Update an existing product                         |
-| DELETE     | `/api/dashboard/products/{id}`       | Delete a specific product                          |
+| GET        | `/api/dashboard/products/{product}`       | Retrieve details of a specific product             |
+| PUT        | `/api/dashboard/products/{product}`       | Update an existing product                         |
+| DELETE     | `/api/dashboard/products/{product}`       | Delete a specific product                          |
+
+Get | Prodcuts Can be sorted and set number of products to get can set all the following
+        ```
+
+        ('per_page', 10);
+        ('search', '');
+        ('sort_field', 'created_at');
+        ('sort_direction', 'desc');
+
+# Site API For all Users
+| Method     | URL                                  | Description                                        |
+|------------|--------------------------------------|----------------------------------------------------|
+| GET        | `/api/products`                      | Retrieve paginated list of products                |
+| GET        | `/api/products/{product:slug}`       | Retrieve details of a specific product             |
+
+
+
 
 
 
