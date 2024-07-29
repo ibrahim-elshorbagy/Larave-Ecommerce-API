@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class PasswordResetLinkController extends Controller
 {
@@ -20,9 +21,17 @@ class PasswordResetLinkController extends Controller
     public function store(Request $request): JsonResponse
     {
         // Validate the email address
-        $request->validate([
+        $validateUser = Validator::make($request->all(), [
             'email' => ['required', 'email'],
         ]);
+
+        if ($validateUser->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validateUser->errors(),
+            ], 422);
+        }
 
         // Attempt to send the password reset link
         $status = Password::sendResetLink(
