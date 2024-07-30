@@ -34,9 +34,9 @@ Route::post('/reset-password', [NewPasswordController::class, 'store']);
     // Cart routes For Not User
     Route::prefix('guest/cart')->group(function() {
         Route::get('/', [CartController::class, 'index']);
-        Route::get('/add/{product:slug}', [CartController::class, 'add']);
-        Route::get('/remove/{product:slug}', [CartController::class, 'remove']);
-        Route::get('/update-quantity/{product:slug}', [CartController::class, 'updateQuantity']);
+        Route::post('/add/{product:slug}', [CartController::class, 'add']);
+        Route::post('/remove/{product:slug}', [CartController::class, 'remove']);
+        Route::post('/update-quantity/{product:slug}', [CartController::class, 'updateQuantity']);
     });
 
 });

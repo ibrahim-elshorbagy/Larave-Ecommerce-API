@@ -40,6 +40,29 @@ Get | Prodcuts Can be sorted and set number of products to get can set all the f
 | GET        | `/api/products/{product:slug}`       | Retrieve details of a specific product             |
 
 
+# Cart System
+
+| Method     | URL                                    | Description                                            |
+|------------|----------------------------------------|--------------------------------------------------------|
+| GET        | `/api/guest/cart`                      | Retrieve the current user's cart                       |
+| POST        | `/api/guest/cart/add/{product:slug}`   | Add a product to the cart                              |
+| POST        | `/api/guest/cart/remove/{product:slug}`| Remove a product from the cart                         |
+| POST        | `/api/guest/cart/update-quantity/{product:slug}` | Update the quantity of a product in the cart         |
+
+If He Authenticated 
+| Method     | URL                                    | Description                                            |
+|------------|----------------------------------------|--------------------------------------------------------|
+| GET        | `/api/cart`                      | Retrieve the current user's cart                       |
+| POST        | `/api/cart/add/{product:slug}`   | Add a product to the cart                              |
+| POST        | `/api/cart/remove/{product:slug}`| Remove a product from the cart                         |
+| POST        | `/api/cart/update-quantity/{product:slug}` | Update the quantity of a product in the cart         |
+
+***Notice Add take ?quantity={number}***
+
+       
+
+
+
 
 
 
