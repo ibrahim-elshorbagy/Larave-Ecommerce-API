@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Cart;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ class RegisteredUserController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
         $roles = $user->roles->pluck('name');
 
+        Cart::moveCartItemsIntoDb();
         return response()->json([
                 'status' => true,
                 'message' => 'User registered successfully',
