@@ -18,18 +18,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
 
         $user =User::factory()->create([
-            'name' => 'Test User',
+            'first_name' => 'ibrahim',
+            'last_name' => 'admin',
             'email' => 'a@a.a',
             'password' => Hash::make('a'),
         ]);
         $user->assignRole('admin');
         $user->assignRole('user');
-        
+
         Product::factory(30)->create();
     }
 }

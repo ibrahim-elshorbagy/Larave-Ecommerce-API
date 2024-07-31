@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\Cart;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class RegisteredUserController extends Controller
         try {
 
         $validateUser = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -40,13 +42,18 @@ class RegisteredUserController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
         ]);
         $user->assignRole('user');
         event(new Registered($user));
+        $userID = $user->id;
+        Customer::create([
+            'user_id' => $userID
 
+        ]);
         Auth::login($user);
         $token = $user->createToken('auth_token')->plainTextToken;
         $roles = $user->roles->pluck('name');
@@ -58,7 +65,8 @@ class RegisteredUserController extends Controller
                 'token' => $token,
                 'user' => [
                     'id' => $user->id,
-                    'name' => $user->name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
                     'email' => $user->email,
                     'roles' => $roles,
                 ]

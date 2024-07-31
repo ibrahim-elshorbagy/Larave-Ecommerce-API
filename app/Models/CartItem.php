@@ -9,5 +9,5 @@ class CartItem extends Model
 {
     use HasFactory;
     protected $fillable = ['user_id', 'quantity', 'product_id',];
-
+    public $timestamps = false;
 }

@@ -14,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'user_id');
+            // $table->foreignIdFor(User::class, 'user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->nullable()->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products');
             $table->integer('quantity');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 
